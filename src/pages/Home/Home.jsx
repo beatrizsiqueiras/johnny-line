@@ -17,17 +17,19 @@ const Home = () => {
         setReactFlowInstance,
         onDrop,
         onDragOver,
+        reactFlowInstance,
     } = useNodesFlowchart();
-   
+
     const { nodesContext } = useNodesContext();
-   
+
     const handlePrintNodes = (e) => {
         e.preventDefault();
-        // nodes.map((node) => {
-        //     console.log(node);
-        // });
-        console.log(nodesContext);
-
+        console.log(nodes);
+        nodes.map((node)=>{
+            if(node.selected){
+                reactFlowInstance?.setNodes((nds) => nds.filter((n) => n.id !== node.id))
+            }
+        })
     };
     return (
         <div className='dndflow' style={{ height: 1000, width: "100%" }}>
@@ -44,6 +46,7 @@ const Home = () => {
                         onDragOver={onDragOver}
                         fitView
                         nodeTypes={nodeTypes}
+                        onNodeDoubleClick={handlePrintNodes}
                     >
                         <Background />
                         <Controls />

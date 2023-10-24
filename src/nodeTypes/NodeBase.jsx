@@ -4,13 +4,15 @@ import { HiArrowRight, HiArrowLeft } from "react-icons/hi";
 import { ImSpinner11 } from "react-icons/im";
 
 import { useNodesContext } from "../hooks/useNodesContext";
+import { useNodesFlowchart } from "../hooks/useNodesFlowchart";
 
 function NodeBase({ data, isConnectable, label }) {
     const { nodesContext } = useNodesContext();
+    const { nodes } = useNodesFlowchart();
     let idNode = `input${data.idNode}`;
     let nodeIndex;
     let changedObject = {};
-    
+
     const onChange = useCallback((evt) => {
         nodesContext.map((node, key) => {
             if (node.id == data.idNode) {
@@ -21,29 +23,31 @@ function NodeBase({ data, isConnectable, label }) {
         });
         nodesContext[nodeIndex] = changedObject;
     }, []);
-
+    
     return (
-        <div className='text-updater-node'>
-            <Handle
-                type='target'
-                position={Position.Top}
-                isConnectable={isConnectable}
-            />
-            <div>
-                <label htmlFor='text'>{label}</label>
-                <input
-                    id={idNode}
-                    name='text'
-                    onChange={onChange}
-                    className='nodrag'
+        <div>
+            <div className='input-node'>
+                <Handle
+                    type='source'
+                    position={Position.Right}
+                    isConnectable={isConnectable}
+                />
+                <div>
+                    <label htmlFor='text'>{label}</label>
+                    <input
+                        id={idNode}
+                        name='text'
+                        onChange={onChange}
+                        className='nodrag'
+                    />
+                </div>
+                <Handle
+                    type='target'
+                    position={Position.Left}
+                    id='b'
+                    isConnectable={isConnectable}
                 />
             </div>
-            <Handle
-                type='source'
-                position={Position.Bottom}
-                id='b'
-                isConnectable={isConnectable}
-            />
         </div>
     );
 }

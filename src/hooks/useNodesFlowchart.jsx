@@ -3,7 +3,7 @@ import { addEdge, useNodesState, useEdgesState } from "reactflow";
 import "reactflow/dist/style.css";
 
 import "../nodeTypes/node-style.css";
-import { NodeSpin, NodeLeft, NodeRight, NodeBase } from "../nodeTypes/NodeBase";
+import { NodeSpin, NodeLeft, NodeRight } from "../nodeTypes/NodeBase";
 import { useNodesContext } from "./useNodesContext";
 
 const nodeTypes = {
@@ -26,7 +26,6 @@ const getId = () => `${id++}`;
 export const useNodesFlowchart = () => {
     const reactFlowWrapper = useRef(null);
     const { nodesContext, setNodesContext } = useNodesContext();
-    // initialNodes.concat(nodesContext)
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
@@ -60,16 +59,15 @@ export const useNodesFlowchart = () => {
                 id: getId(),
                 type,
                 position,
-                data: { idNode: id-1},
+                data: { idNode: id - 1 },
             };
+            setNodes((nds) => nds.concat(newNode));
             const newNodeContext = [newNode];
-            setNodes((nodes) => nodes.concat(newNode));
-            setNodesContext((nodes) => nodes.concat(newNodeContext));
+            setNodesContext((nds) => nds.concat(newNodeContext));
         },
         [reactFlowInstance]
     );
     return {
-        nodes,
         reactFlowWrapper,
         nodes,
         edges,
@@ -80,5 +78,6 @@ export const useNodesFlowchart = () => {
         setReactFlowInstance,
         onDrop,
         onDragOver,
+        reactFlowInstance
     };
 };
