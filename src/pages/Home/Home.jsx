@@ -2,8 +2,7 @@ import ReactFlow, { ReactFlowProvider, Controls, Background } from "reactflow";
 import "reactflow/dist/style.css";
 
 import Sidebar from "./Sidebar";
-import { useNodesFlowchart } from "../../hooks/useNodesFlowchart";
-import { useNodesContext } from "../../hooks/useNodesContext";
+import { useNodesContext } from "../../context/NodesContext";
 
 const Home = () => {
     const {
@@ -18,18 +17,21 @@ const Home = () => {
         onDrop,
         onDragOver,
         reactFlowInstance,
-    } = useNodesFlowchart();
+    } = useNodesContext();
 
-    const { nodesContext } = useNodesContext();
-
+    const deleteNode = (e) => {
+        e.preventDefault();
+        nodes.map((node) => {
+            if (node.selected) {
+                reactFlowInstance?.setNodes((nds) =>
+                    nds.filter((n) => n.id !== node.id)
+                );
+            }
+        });
+    };
     const handlePrintNodes = (e) => {
         e.preventDefault();
         console.log(nodes);
-        nodes.map((node)=>{
-            if(node.selected){
-                reactFlowInstance?.setNodes((nds) => nds.filter((n) => n.id !== node.id))
-            }
-        })
     };
     return (
         <div className='dndflow' style={{ height: 1000, width: "100%" }}>
@@ -46,7 +48,7 @@ const Home = () => {
                         onDragOver={onDragOver}
                         fitView
                         nodeTypes={nodeTypes}
-                        onNodeDoubleClick={handlePrintNodes}
+                        onNodeDoubleClick={deleteNode}
                     >
                         <Background />
                         <Controls />

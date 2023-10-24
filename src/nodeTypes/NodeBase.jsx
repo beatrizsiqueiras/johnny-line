@@ -2,28 +2,25 @@ import { useCallback } from "react";
 import { Handle, Position } from "reactflow";
 import { HiArrowRight, HiArrowLeft } from "react-icons/hi";
 import { ImSpinner11 } from "react-icons/im";
+import { useNodesContext } from "../context/NodesContext";
 
-import { useNodesContext } from "../hooks/useNodesContext";
-import { useNodesFlowchart } from "../hooks/useNodesFlowchart";
-
-function NodeBase({ data, isConnectable, label }) {
-    const { nodesContext } = useNodesContext();
-    const { nodes } = useNodesFlowchart();
-    let idNode = `input${data.idNode}`;
+function NodeBase({ id, data, isConnectable, label }) {
+    const { nodes } = useNodesContext();
+    let idNode = `input${id}`;
     let nodeIndex;
     let changedObject = {};
 
     const onChange = useCallback((evt) => {
-        nodesContext.map((node, key) => {
+        nodes.map((node, key) => {
             if (node.id == data.idNode) {
                 nodeIndex = key;
                 changedObject = { ...node };
                 changedObject.data.inputValue = evt.target.value;
             }
         });
-        nodesContext[nodeIndex] = changedObject;
+        nodes[nodeIndex] = changedObject;
     }, []);
-    
+
     return (
         <div>
             <div className='input-node'>
@@ -52,7 +49,7 @@ function NodeBase({ data, isConnectable, label }) {
     );
 }
 
-function NodeRight({ data, isConnectable }) {
+function NodeRight({ id, data, isConnectable }) {
     return (
         <NodeBase
             isConnectable={isConnectable}
@@ -62,7 +59,7 @@ function NodeRight({ data, isConnectable }) {
     );
 }
 
-function NodeLeft({ data, isConnectable }) {
+function NodeLeft({ id, data, isConnectable }) {
     return (
         <NodeBase
             isConnectable={isConnectable}
@@ -72,7 +69,7 @@ function NodeLeft({ data, isConnectable }) {
     );
 }
 
-function NodeSpin({ data, isConnectable }) {
+function NodeSpin({ id, data, isConnectable }) {
     return (
         <NodeBase
             isConnectable={isConnectable}
