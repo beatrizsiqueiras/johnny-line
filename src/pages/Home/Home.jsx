@@ -18,7 +18,9 @@ const Home = () => {
         onDrop,
         onDragOver,
     } = useNodesFlowchart();
+   
     const { nodesContext } = useNodesContext();
+   
     const handlePrintNodes = (e) => {
         e.preventDefault();
         // nodes.map((node) => {

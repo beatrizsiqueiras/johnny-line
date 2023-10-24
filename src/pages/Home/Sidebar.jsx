@@ -9,7 +9,7 @@ export default () => {
     return (
         <aside>
             <div className='description'>
-                You can drag these nodes to the pane on the right.
+                Segure e arraste os comandos que deseja!
             </div>
             <div
                 className='dndnode input'

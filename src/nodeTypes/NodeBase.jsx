@@ -2,11 +2,24 @@ import { useCallback } from "react";
 import { Handle, Position } from "reactflow";
 import { HiArrowRight, HiArrowLeft } from "react-icons/hi";
 import { ImSpinner11 } from "react-icons/im";
-const handleStyle = { left: 10 };
+
+import { useNodesContext } from "../hooks/useNodesContext";
 
 function NodeBase({ data, isConnectable, label }) {
+    const { nodesContext } = useNodesContext();
+    let idNode = `input${data.idNode}`;
+    let nodeIndex;
+    let changedObject = {};
+    
     const onChange = useCallback((evt) => {
-        console.log(evt.target.value);
+        nodesContext.map((node, key) => {
+            if (node.id == data.idNode) {
+                nodeIndex = key;
+                changedObject = { ...node };
+                changedObject.data.inputValue = evt.target.value;
+            }
+        });
+        nodesContext[nodeIndex] = changedObject;
     }, []);
 
     return (
@@ -19,7 +32,7 @@ function NodeBase({ data, isConnectable, label }) {
             <div>
                 <label htmlFor='text'>{label}</label>
                 <input
-                    id='text'
+                    id={idNode}
                     name='text'
                     onChange={onChange}
                     className='nodrag'
@@ -36,11 +49,23 @@ function NodeBase({ data, isConnectable, label }) {
 }
 
 function NodeRight({ data, isConnectable }) {
-    return <NodeBase isConnectable={isConnectable} label={<HiArrowRight />} />;
+    return (
+        <NodeBase
+            isConnectable={isConnectable}
+            label={<HiArrowRight />}
+            data={data}
+        />
+    );
 }
 
 function NodeLeft({ data, isConnectable }) {
-    return <NodeBase isConnectable={isConnectable} label={<HiArrowLeft />} />;
+    return (
+        <NodeBase
+            isConnectable={isConnectable}
+            label={<HiArrowLeft />}
+            data={data}
+        />
+    );
 }
 
 function NodeSpin({ data, isConnectable }) {
@@ -48,8 +73,9 @@ function NodeSpin({ data, isConnectable }) {
         <NodeBase
             isConnectable={isConnectable}
             label={<ImSpinner11 />}
+            data={data}
         />
     );
 }
 
-export { NodeRight, NodeLeft, NodeSpin };
+export { NodeRight, NodeLeft, NodeSpin, NodeBase };

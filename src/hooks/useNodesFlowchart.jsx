@@ -3,7 +3,7 @@ import { addEdge, useNodesState, useEdgesState } from "reactflow";
 import "reactflow/dist/style.css";
 
 import "../nodeTypes/node-style.css";
-import { NodeSpin, NodeLeft, NodeRight } from "../nodeTypes/NodeBase";
+import { NodeSpin, NodeLeft, NodeRight, NodeBase } from "../nodeTypes/NodeBase";
 import { useNodesContext } from "./useNodesContext";
 
 const nodeTypes = {
@@ -47,6 +47,7 @@ export const useNodesFlowchart = () => {
             const reactFlowBounds =
                 reactFlowWrapper.current.getBoundingClientRect();
             const type = event.dataTransfer.getData("application/reactflow");
+
             if (typeof type === "undefined" || !type) {
                 return;
             }
@@ -59,7 +60,7 @@ export const useNodesFlowchart = () => {
                 id: getId(),
                 type,
                 position,
-                data: { idNode: id },
+                data: { idNode: id-1},
             };
             const newNodeContext = [newNode];
             setNodes((nodes) => nodes.concat(newNode));
