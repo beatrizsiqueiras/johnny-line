@@ -12,7 +12,7 @@ function NodeBase({ id, data, isConnectable, label }) {
 
     const onChange = useCallback((evt) => {
         nodes.map((node, key) => {
-            if (node.id == data.idNode) {
+            if (node.id == id) {
                 nodeIndex = key;
                 changedObject = { ...node };
                 changedObject.data.inputValue = evt.target.value;
@@ -55,6 +55,7 @@ function NodeRight({ id, data, isConnectable }) {
             isConnectable={isConnectable}
             label={<HiArrowRight />}
             data={data}
+            id={id}
         />
     );
 }
@@ -65,6 +66,7 @@ function NodeLeft({ id, data, isConnectable }) {
             isConnectable={isConnectable}
             label={<HiArrowLeft />}
             data={data}
+            id={id}
         />
     );
 }
@@ -75,6 +77,7 @@ function NodeSpin({ id, data, isConnectable }) {
             isConnectable={isConnectable}
             label={<ImSpinner11 />}
             data={data}
+            id={id}
         />
     );
 }

@@ -10,7 +10,6 @@ import { addEdge, useNodesState, useEdgesState } from "reactflow";
 import "reactflow/dist/style.css";
 import "../nodeTypes/node-style.css";
 import { NodeSpin, NodeLeft, NodeRight } from "../nodeTypes/NodeBase";
-
 const nodeTypes = {
     nodeRight: NodeRight,
     nodeLeft: NodeLeft,
@@ -22,6 +21,8 @@ const initialNodes = [
         type: "input",
         data: { label: "Start" },
         position: { x: 250, y: 5 },
+        sourcePosition: "right",
+        deletable: false,
     },
 ];
 
@@ -37,7 +38,7 @@ export const NodesContextProvider = ({ children }) => {
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
     const onConnect = useCallback(
-        (params) => setEdges((eds) => addEdge(params, eds)),
+        (params) => setEdges((eds) => addEdge({...params, animated:true}, eds)),
         []
     );
 
@@ -65,7 +66,7 @@ export const NodesContextProvider = ({ children }) => {
                 id: getId(),
                 type,
                 position,
-                data: { idNode: id - 1 },
+                data: {},
             };
             setNodes((nds) => nds.concat(newNode));
         },

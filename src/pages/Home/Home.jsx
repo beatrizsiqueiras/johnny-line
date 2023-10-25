@@ -1,8 +1,15 @@
-import ReactFlow, { ReactFlowProvider, Controls, Background } from "reactflow";
+import ReactFlow, {
+    ReactFlowProvider,
+    Controls,
+    Background,
+    getConnectedEdges,
+    MiniMap,
+} from "reactflow";
 import "reactflow/dist/style.css";
 
 import Sidebar from "./Sidebar";
 import { useNodesContext } from "../../context/NodesContext";
+import ConnectionLine from "../../components/ConnectionLine/ConnectionLine";
 
 const Home = () => {
     const {
@@ -32,6 +39,8 @@ const Home = () => {
     const handlePrintNodes = (e) => {
         e.preventDefault();
         console.log(nodes);
+        // console.log(reactFlowInstance.toObject());
+        console.log(reactFlowInstance.getIntersectingNodes(nodes[1]));
     };
     return (
         <div className='dndflow' style={{ height: 1000, width: "100%" }}>
@@ -49,9 +58,11 @@ const Home = () => {
                         fitView
                         nodeTypes={nodeTypes}
                         onNodeDoubleClick={deleteNode}
+                        connectionLineComponent={ConnectionLine}
                     >
                         <Background />
                         <Controls />
+                        <MiniMap nodeStrokeWidth={3} zoomable pannable />
                     </ReactFlow>
                 </div>
                 <Sidebar />
