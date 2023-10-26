@@ -2,7 +2,6 @@ import ReactFlow, {
     ReactFlowProvider,
     Controls,
     Background,
-    getConnectedEdges,
     MiniMap,
 } from "reactflow";
 import "reactflow/dist/style.css";
@@ -11,7 +10,7 @@ import Sidebar from "./Sidebar";
 import { useNodesContext } from "../../context/NodesContext";
 import ConnectionLine from "../../components/ConnectionLine/ConnectionLine";
 
-const Home = () => {
+const Flowchart = () => {
     const {
         reactFlowWrapper,
         nodes,
@@ -26,21 +25,35 @@ const Home = () => {
         reactFlowInstance,
     } = useNodesContext();
 
+    const targetIds = edges.map((edge) => edge.target);
+
     const deleteNode = (e) => {
         e.preventDefault();
+        let nodeSelectedId = "";
         nodes.map((node) => {
             if (node.selected) {
+                nodeSelectedId = node.id;
                 reactFlowInstance?.setNodes((nds) =>
                     nds.filter((n) => n.id !== node.id)
                 );
             }
         });
+
+        edges.map((edge) => {
+            if (edge.target == nodeSelectedId || edge.source == nodeSelectedId) {
+                reactFlowInstance?.setEdges((edg) =>
+                    edg.filter((e) => e.id !== edge.id)
+                );
+            }
+        });
     };
+
+    const nodeCommands = () => {};
     const handlePrintNodes = (e) => {
         e.preventDefault();
-        console.log(nodes);
-        // console.log(reactFlowInstance.toObject());
-        console.log(reactFlowInstance.getIntersectingNodes(nodes[1]));
+        console.log(reactFlowInstance.toObject());
+        // console.log(nodes);
+        // console.log(targetIds);
     };
     return (
         <div className='dndflow' style={{ height: 1000, width: "100%" }}>
@@ -72,4 +85,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Flowchart;

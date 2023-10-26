@@ -8,14 +8,14 @@ const Navbar = () => {
                     Johnny-<strong>Line</strong>
                 </NavLink>
                 <ul className={styles.linksList}>
-                    <li key='home'>
+                    <li key='flowchart'>
                         <NavLink
                             to='/'
                             className={({ isActive }) =>
                                 isActive ? styles.active : ""
                             }
                         >
-                            Home
+                            Flow
                         </NavLink>
                     </li>
                     <li key='about'>
