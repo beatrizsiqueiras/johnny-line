@@ -11,6 +11,7 @@ import { useNodesContext } from "../../context/NodesContext";
 import ConnectionLine from "../../components/ConnectionLine/ConnectionLine";
 
 const Flowchart = () => {
+    let deletedNodes = [];
     const {
         reactFlowWrapper,
         nodes,
@@ -29,31 +30,19 @@ const Flowchart = () => {
 
     const deleteNode = (e) => {
         e.preventDefault();
-        let nodeSelectedId = "";
         nodes.map((node) => {
             if (node.selected) {
-                nodeSelectedId = node.id;
-                reactFlowInstance?.setNodes((nds) =>
-                    nds.filter((n) => n.id !== node.id)
-                );
-            }
-        });
-
-        edges.map((edge) => {
-            if (edge.target == nodeSelectedId || edge.source == nodeSelectedId) {
-                reactFlowInstance?.setEdges((edg) =>
-                    edg.filter((e) => e.id !== edge.id)
-                );
+                reactFlowInstance?.deleteElements({ nodes: [node] });
             }
         });
     };
 
-    const nodeCommands = () => {};
+    // const nodeCommands = () => {};
+
     const handlePrintNodes = (e) => {
         e.preventDefault();
         console.log(reactFlowInstance.toObject());
-        // console.log(nodes);
-        // console.log(targetIds);
+        console.log(deletedNodes);
     };
     return (
         <div className='dndflow' style={{ height: 1000, width: "100%" }}>
