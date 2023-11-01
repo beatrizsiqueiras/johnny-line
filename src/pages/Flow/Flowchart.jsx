@@ -2,6 +2,7 @@ import ReactFlow, {
     ReactFlowProvider,
     Controls,
     Background,
+    BackgroundVariant,
     MiniMap,
 } from "reactflow";
 import "reactflow/dist/style.css";
@@ -11,7 +12,6 @@ import { useNodesContext } from "../../context/NodesContext";
 import ConnectionLine from "../../components/ConnectionLine/ConnectionLine";
 
 const Flowchart = () => {
-    let deletedNodes = [];
     const {
         reactFlowWrapper,
         nodes,
@@ -36,13 +36,51 @@ const Flowchart = () => {
             }
         });
     };
+    const deleteEdge = (e) => {
+        e.preventDefault();
+        edges.map((edge) => {
+            if (edge.selected) {
+                reactFlowInstance?.deleteElements({ edges: [edge] });
+            }
+        });
+    };
 
-    // const nodeCommands = () => {};
+    const nodesMap = {};
+
+    edges.forEach((edge) => {
+        if (!nodesMap[edge.source]) {
+            nodesMap[edge.source] = [];
+        }
+        nodesMap[edge.source].push(edge.target);
+    });
+
+    function generateIdsOrderedNodes() {
+        const result = [];
+        const visited = {};
+        function visit(node) {
+            if (!visited[node]) {
+                visited[node] = true;
+                if (nodesMap[node]) {
+                    nodesMap[node].forEach(visit);
+                }
+                result.unshift(node);
+            }
+        }
+        visit("0");
+        return result;
+    }
+    let idsOrdenated = generateIdsOrderedNodes();
+
+    const ordenatedNodes = nodes.sort((a, b) => {
+        const indexA = idsOrdenated.indexOf(a.id);
+        const indexB = idsOrdenated.indexOf(b.id);
+        return indexA - indexB;
+    });
 
     const handlePrintNodes = (e) => {
         e.preventDefault();
-        console.log(reactFlowInstance.toObject());
-        console.log(deletedNodes);
+        // console.log(reactFlowInstance.toObject());
+        console.log(ordenatedNodes);
     };
     return (
         <div className='dndflow' style={{ height: 1000, width: "100%" }}>
@@ -60,9 +98,13 @@ const Flowchart = () => {
                         fitView
                         nodeTypes={nodeTypes}
                         onNodeDoubleClick={deleteNode}
+                        onEdgeDoubleClick={deleteEdge}
                         connectionLineComponent={ConnectionLine}
                     >
-                        <Background />
+                        <Background
+                            variant={BackgroundVariant.Cross}
+                            gap={50}
+                        />
                         <Controls />
                         <MiniMap nodeStrokeWidth={3} zoomable pannable />
                     </ReactFlow>

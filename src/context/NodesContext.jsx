@@ -38,7 +38,8 @@ export const NodesContextProvider = ({ children }) => {
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
     const onConnect = useCallback(
-        (params) => setEdges((eds) => addEdge({...params, animated:true}, eds)),
+        (params) =>
+            setEdges((eds) => addEdge({ ...params, animated: true }, eds)),
         []
     );
 
