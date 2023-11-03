@@ -6,23 +6,24 @@ import {
     useContext,
 } from "react";
 import { addEdge, useNodesState, useEdgesState } from "reactflow";
-
 import "reactflow/dist/style.css";
 import "../nodeTypes/node-style.css";
-import { NodeSpin, NodeLeft, NodeRight } from "../nodeTypes/NodeBase";
+import { NodeSpin, NodeAdvance } from "../nodeTypes/NodeBase";
+import { VscDebugStart } from 'react-icons/vsc'; 
+
 const nodeTypes = {
-    nodeRight: NodeRight,
-    nodeLeft: NodeLeft,
+    nodeAdvance: NodeAdvance,
     nodeSpin: NodeSpin,
 };
 const initialNodes = [
     {
         id: "0",
         type: "input",
-        data: { label: "Start" },
-        position: { x: 250, y: 5 },
+        data: { label: <VscDebugStart/> },
+        position: { x: 0, y: 50 },
         sourcePosition: "right",
         deletable: false,
+        style: { background: '#aacc00', border: '0px', borderRadius: '50%', width: '40px', heigh:'40px', color: '#FFF'},
     },
 ];
 

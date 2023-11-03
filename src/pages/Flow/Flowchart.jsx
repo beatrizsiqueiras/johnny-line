@@ -83,9 +83,11 @@ const Flowchart = () => {
         console.log(ordenatedNodes);
     };
     return (
-        <div className='dndflow' style={{ height: 1000, width: "100%" }}>
+        <div className='dndflow' style={{ height: 500, width: "90%" }}>
             <ReactFlowProvider>
                 <div className='reactflow-wrapper' ref={reactFlowWrapper}>
+                    <Sidebar />
+
                     <ReactFlow
                         nodes={nodes}
                         edges={edges}
@@ -109,8 +111,7 @@ const Flowchart = () => {
                         <MiniMap nodeStrokeWidth={3} zoomable pannable />
                     </ReactFlow>
                 </div>
-                <Sidebar />
-                <button onClick={handlePrintNodes}>Ver comandos</button>
+                {/* <button onClick={handlePrintNodes}>Ver comandos</button> */}
             </ReactFlowProvider>
         </div>
     );

@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { Handle, Position } from "reactflow";
-import { HiArrowRight, HiArrowLeft } from "react-icons/hi";
 import { ImSpinner11 } from "react-icons/im";
+import { PiArrowFatLinesUpFill } from "react-icons/pi";
 import { useNodesContext } from "../context/NodesContext";
 
 function NodeBase({ id, data, isConnectable, label }) {
@@ -49,22 +49,11 @@ function NodeBase({ id, data, isConnectable, label }) {
     );
 }
 
-function NodeRight({ id, data, isConnectable }) {
+function NodeAdvance({ id, data, isConnectable }) {
     return (
-        <NodeBase
+        <NodeAdvance
             isConnectable={isConnectable}
-            label={<HiArrowRight />}
-            data={data}
-            id={id}
-        />
-    );
-}
-
-function NodeLeft({ id, data, isConnectable }) {
-    return (
-        <NodeBase
-            isConnectable={isConnectable}
-            label={<HiArrowLeft />}
+            label={<PiArrowFatLinesUpFill />}
             data={data}
             id={id}
         />
@@ -82,4 +71,4 @@ function NodeSpin({ id, data, isConnectable }) {
     );
 }
 
-export { NodeRight, NodeLeft, NodeSpin, NodeBase };
+export { NodeAdvance, NodeSpin, NodeBase };
