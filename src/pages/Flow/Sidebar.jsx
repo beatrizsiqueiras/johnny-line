@@ -11,14 +11,14 @@ export default () => {
     return (
         <aside>
             <div
-                className='dndnode input'
+                className='dndnode node-advance'
                 onDragStart={(event) => onDragStart(event, "nodeAdvance")}
                 draggable
             >
                 <PiArrowFatLinesUpFill />
             </div>
             <div
-                className='dndnode output'
+                className='dndnode node-spin'
                 onDragStart={(event) => onDragStart(event, "nodeSpin")}
                 draggable
             >

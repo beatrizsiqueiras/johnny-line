@@ -1,0 +1,36 @@
+.node {
+    height: 65px;
+    width: 130px;
+    border: 1px solid #eee;
+    padding: 5px;
+    border-radius: 5px;
+    background: white;
+}
+
+.node label {
+    display: block;
+    color: #777;
+    font-size: 12px;
+}
+
+.node select {
+    border: 1px solid #eee;
+    margin-bottom: 5px;
+}
+
+.node select input {
+    border: 1px solid #ece1e1;
+    padding: 2px;
+    border-radius: 5px;
+}
+
+.node input {
+    width: 120px;
+    border: 0px;
+    border-bottom: 1px solid #504b4b;
+}
+
+.node-spin {
+    display: flex;
+    flex-direction: column;
+}

@@ -11,6 +11,18 @@ import Sidebar from "./Sidebar";
 import { useNodesContext } from "../../context/NodesContext";
 import ConnectionLine from "../../components/ConnectionLine/ConnectionLine";
 
+function nodeColor(node) {
+    switch (node.type) {
+      case 'input':
+        return '#aacc00';
+      case 'nodeAdvance':
+        return '#0041d0';
+      case 'nodeSpin':
+        return '#ff0072';
+      default:
+        return '#ff0072';
+    }
+}
 const Flowchart = () => {
     const {
         reactFlowWrapper,
@@ -83,7 +95,7 @@ const Flowchart = () => {
         console.log(ordenatedNodes);
     };
     return (
-        <div className='dndflow' style={{ height: 500, width: "90%" }}>
+        <div className='dndflow' style={{ height: 700, width: "90%" }}>
             <ReactFlowProvider>
                 <div className='reactflow-wrapper' ref={reactFlowWrapper}>
                     <Sidebar />
@@ -108,7 +120,7 @@ const Flowchart = () => {
                             gap={50}
                         />
                         <Controls />
-                        <MiniMap nodeStrokeWidth={3} zoomable pannable />
+                        <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
                     </ReactFlow>
                 </div>
                 {/* <button onClick={handlePrintNodes}>Ver comandos</button> */}

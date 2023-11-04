@@ -7,9 +7,10 @@ import {
 } from "react";
 import { addEdge, useNodesState, useEdgesState } from "reactflow";
 import "reactflow/dist/style.css";
-import "../nodeTypes/node-style.css";
-import { NodeSpin, NodeAdvance } from "../nodeTypes/NodeBase";
-import { VscDebugStart } from 'react-icons/vsc'; 
+import "../components/NodeTypes/node-style.css";
+import { NodeSpin } from "../components/NodeTypes/NodeSpin";
+import { NodeAdvance } from "../components/NodeTypes/NodeAdvance";
+import { VscDebugStart } from "react-icons/vsc";
 
 const nodeTypes = {
     nodeAdvance: NodeAdvance,
@@ -19,11 +20,18 @@ const initialNodes = [
     {
         id: "0",
         type: "input",
-        data: { label: <VscDebugStart/> },
+        data: { label: <VscDebugStart /> },
         position: { x: 0, y: 50 },
         sourcePosition: "right",
         deletable: false,
-        style: { background: '#aacc00', border: '0px', borderRadius: '50%', width: '40px', heigh:'40px', color: '#FFF'},
+        style: {
+            background: "#aacc00",
+            border: "0px",
+            borderRadius: "50%",
+            width: "40px",
+            heigh: "40px",
+            color: "#FFF",
+        },
     },
 ];
 
