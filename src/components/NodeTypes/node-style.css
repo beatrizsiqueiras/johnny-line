@@ -14,20 +14,16 @@
 }
 
 .node select {
-    border: 1px solid #eee;
-    margin-bottom: 5px;
-}
 
-.node select input {
-    border: 1px solid #ece1e1;
+    border: 0px;
+    border-bottom: 1px solid #504b4b;
+    margin-bottom: 5px;
     padding: 2px;
     border-radius: 5px;
 }
 
-.node input {
-    width: 120px;
-    border: 0px;
-    border-bottom: 1px solid #504b4b;
+.node #length {
+    width: 130px;
 }
 
 .node-spin {

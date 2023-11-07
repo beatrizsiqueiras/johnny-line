@@ -45,6 +45,7 @@ export const NodesContextProvider = ({ children }) => {
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
+    const [ordenatedNodes, setOrdenatedNodes] = useState([]);
 
     const onConnect = useCallback(
         (params) =>
@@ -96,6 +97,8 @@ export const NodesContextProvider = ({ children }) => {
                 onDrop,
                 onDragOver,
                 reactFlowInstance,
+                ordenatedNodes,
+                setOrdenatedNodes,
             }}
         >
             {children}

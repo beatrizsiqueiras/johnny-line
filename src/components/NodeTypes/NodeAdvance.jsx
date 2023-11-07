@@ -1,13 +1,20 @@
 import { useCallback } from "react";
 import { Handle, Position } from "reactflow";
-import { PiArrowFatLinesUpFill } from "react-icons/pi";
+import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import { useNodesContext } from "../../context/NodesContext";
 
 export const NodeAdvance = ({ id, data, isConnectable }) => {
     const { nodes } = useNodesContext();
     let nodeIndex;
     let changedObject = {};
-
+    const options = [];
+    for (let i = 1; i <= 200; i++) {
+        options.push(
+            <option key={i} value={i}>
+                {i}
+            </option>
+        );
+    }
     const handleDistanceToMove = useCallback((evt) => {
         nodes.map((node, key) => {
             if (node.id == id) {
@@ -31,24 +38,24 @@ export const NodeAdvance = ({ id, data, isConnectable }) => {
                 />
                 <div>
                     <div>
-                        <label>{<PiArrowFatLinesUpFill />}</label>
+                        <label>
+                            <HiOutlineArrowsUpDown />
+                        </label>
                         <select
                             name='direction'
                             id='direction'
                             onChange={handleDistanceToMove}
                         >
-                            <option value='forward'>Mover para frente</option>
+                            <option value='forward'>Mover para frente </option>
                             <option value='backward'>Mover para trás</option>
                         </select>
-                        <label>
-                            <input
-                                type='number'
-                                name='length'
-                                id='length'
-                                placeholder='Distância'
-                                onChange={handleDistanceToMove}
-                            />
-                        </label>
+                        <select
+                            name='length'
+                            id='length'
+                            onChange={handleDistanceToMove}
+                        >
+                            {options}
+                        </select>
                     </div>
                 </div>
                 <Handle

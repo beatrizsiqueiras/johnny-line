@@ -6,21 +6,23 @@ import ReactFlow, {
     MiniMap,
 } from "reactflow";
 import "reactflow/dist/style.css";
+import Swal from "sweetalert2";
+import "animate.css";
 
 import Sidebar from "./Sidebar";
 import { useNodesContext } from "../../context/NodesContext";
 import ConnectionLine from "../../components/ConnectionLine/ConnectionLine";
-
+import { RiRobot2Fill } from "react-icons/ri";
 function nodeColor(node) {
     switch (node.type) {
-      case 'input':
-        return '#aacc00';
-      case 'nodeAdvance':
-        return '#0041d0';
-      case 'nodeSpin':
-        return '#ff0072';
-      default:
-        return '#ff0072';
+        case "input":
+            return "#aacc00";
+        case "nodeAdvance":
+            return "#0041d0";
+        case "nodeTurn":
+            return "#ff0072";
+        default:
+            return "#ff0072";
     }
 }
 const Flowchart = () => {
@@ -36,9 +38,8 @@ const Flowchart = () => {
         onDrop,
         onDragOver,
         reactFlowInstance,
+        setOrdenatedNodes,
     } = useNodesContext();
-
-    const targetIds = edges.map((edge) => edge.target);
 
     const deleteNode = (e) => {
         e.preventDefault();
@@ -91,40 +92,66 @@ const Flowchart = () => {
 
     const handlePrintNodes = (e) => {
         e.preventDefault();
-        // console.log(reactFlowInstance.toObject());
-        console.log(ordenatedNodes);
+        setOrdenatedNodes(ordenatedNodes);
+        Swal.fire({
+            title: "Comandos enviados!",
+            showClass: {
+                popup: `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+              `,
+            },
+            hideClass: {
+                popup: `
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+              `,
+            },
+        });
     };
     return (
-        <div className='dndflow' style={{ height: 700, width: "90%" }}>
-            <ReactFlowProvider>
-                <div className='reactflow-wrapper' ref={reactFlowWrapper}>
-                    <Sidebar />
+        <div>
+            <Sidebar />
+            <div className='dndflow' style={{ height: 700, width: "100%" }}>
+                <ReactFlowProvider>
+                    <div className='reactflow-wrapper' ref={reactFlowWrapper}>
+                        <ReactFlow
+                            nodes={nodes}
+                            edges={edges}
+                            onNodesChange={onNodesChange}
+                            onEdgesChange={onEdgesChange}
+                            onConnect={onConnect}
+                            onInit={setReactFlowInstance}
+                            onDrop={onDrop}
+                            onDragOver={onDragOver}
+                            fitView
+                            nodeTypes={nodeTypes}
+                            onNodeDoubleClick={deleteNode}
+                            onEdgeDoubleClick={deleteEdge}
+                            connectionLineComponent={ConnectionLine}
+                        >
+                            <Background
+                                variant={BackgroundVariant.Cross}
+                                gap={50}
+                            />
+                            <Controls position='top-left' />
+                            <MiniMap
+                                nodeColor={nodeColor}
+                                nodeStrokeWidth={3}
+                                zoomable
+                                pannable
+                                position='bottom-left'
+                            />
+                        </ReactFlow>
+                    </div>
+                </ReactFlowProvider>
 
-                    <ReactFlow
-                        nodes={nodes}
-                        edges={edges}
-                        onNodesChange={onNodesChange}
-                        onEdgesChange={onEdgesChange}
-                        onConnect={onConnect}
-                        onInit={setReactFlowInstance}
-                        onDrop={onDrop}
-                        onDragOver={onDragOver}
-                        fitView
-                        nodeTypes={nodeTypes}
-                        onNodeDoubleClick={deleteNode}
-                        onEdgeDoubleClick={deleteEdge}
-                        connectionLineComponent={ConnectionLine}
-                    >
-                        <Background
-                            variant={BackgroundVariant.Cross}
-                            gap={50}
-                        />
-                        <Controls />
-                        <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
-                    </ReactFlow>
-                </div>
-                {/* <button onClick={handlePrintNodes}>Ver comandos</button> */}
-            </ReactFlowProvider>
+                <button onClick={handlePrintNodes}>
+                    <RiRobot2Fill />
+                </button>
+            </div>
         </div>
     );
 };

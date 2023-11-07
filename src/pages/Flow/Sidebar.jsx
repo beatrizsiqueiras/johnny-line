@@ -1,5 +1,5 @@
 import React from "react";
-import { PiArrowFatLinesUpFill } from "react-icons/pi";
+import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import { ImSpinner11 } from "react-icons/im";
 
 export default () => {
@@ -15,7 +15,7 @@ export default () => {
                 onDragStart={(event) => onDragStart(event, "nodeAdvance")}
                 draggable
             >
-                <PiArrowFatLinesUpFill />
+                <HiOutlineArrowsUpDown />
             </div>
             <div
                 className='dndnode node-spin'
