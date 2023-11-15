@@ -8,11 +8,12 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import Swal from "sweetalert2";
 import "animate.css";
-
 import Sidebar from "./Sidebar";
 import { useNodesContext } from "../../context/NodesContext";
 import ConnectionLine from "../../components/ConnectionLine/ConnectionLine";
 import { RiRobot2Fill } from "react-icons/ri";
+import { api } from "../../services/api";
+
 function nodeColor(node) {
     switch (node.type) {
         case "input":
@@ -25,6 +26,7 @@ function nodeColor(node) {
             return "#ff0072";
     }
 }
+
 const Flowchart = () => {
     const {
         reactFlowWrapper,
@@ -49,6 +51,7 @@ const Flowchart = () => {
             }
         });
     };
+
     const deleteEdge = (e) => {
         e.preventDefault();
         edges.map((edge) => {
@@ -70,6 +73,7 @@ const Flowchart = () => {
     function generateIdsOrderedNodes() {
         const result = [];
         const visited = {};
+
         function visit(node) {
             if (!visited[node]) {
                 visited[node] = true;
@@ -79,9 +83,11 @@ const Flowchart = () => {
                 result.unshift(node);
             }
         }
+
         visit("0");
         return result;
     }
+
     let idsOrdenated = generateIdsOrderedNodes();
 
     const ordenatedNodes = nodes.sort((a, b) => {
@@ -110,7 +116,14 @@ const Flowchart = () => {
               `,
             },
         });
+
+        api.post("/", {
+            blinkInterval: 1000,
+        }).then((response) => {
+            console.log(response);
+        });
     };
+
     return (
         <div>
             <Sidebar />
