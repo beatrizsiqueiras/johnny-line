@@ -118,7 +118,7 @@ const Flowchart = () => {
         });
 
         api.post("/", {
-            blinkInterval: 1000,
+            commands: ordenatedNodes,
         }).then((response) => {
             console.log(response);
         });
