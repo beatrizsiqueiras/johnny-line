@@ -22,7 +22,7 @@
     border-radius: 5px;
 }
 
-.node #length {
+.node #length, #direction {
     width: 130px;
 }
 

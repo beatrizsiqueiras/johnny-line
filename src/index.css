@@ -20,7 +20,7 @@ a:hover, nav button:hover {
     color: #bbb;
 }
 
-button {
+#sendCommands {
     position: fixed; /* esta tampando o controls  */
     bottom: 20px;
     right: 20px;
@@ -54,13 +54,13 @@ aside {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: .5em 2em;
+    padding: .1em 2em;
 }
 
 .dndnode {
-    width: 90px;
+    width: 80px;
     height: 40px;
-    padding: 4px;
+    padding: 1px;
     border-radius: 10px;
     display: flex;
     justify-content: center;

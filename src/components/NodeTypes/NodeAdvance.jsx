@@ -46,8 +46,7 @@ export const NodeAdvance = ({ id, data, isConnectable }) => {
                             id='direction'
                             onChange={handleDistanceToMove}
                         >
-                            <option value='forward'>Mover para frente </option>
-                            <option value='backward'>Mover para trás</option>
+                            <option value='forward'>Avançar </option>
                         </select>
                         <select
                             name='length'

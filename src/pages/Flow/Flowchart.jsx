@@ -99,35 +99,38 @@ const Flowchart = () => {
     const handlePrintNodes = (e) => {
         e.preventDefault();
         setOrdenatedNodes(ordenatedNodes);
-        Swal.fire({
-            title: "Comandos enviados!",
-            showClass: {
-                popup: `
-                animate__animated
-                animate__fadeInUp
-                animate__faster
-              `,
-            },
-            hideClass: {
-                popup: `
-                animate__animated
-                animate__fadeOutDown
-                animate__faster
-              `,
-            },
-        });
-
-        api.post("/", {
-            commands: ordenatedNodes,
-        }).then((response) => {
-            console.log(response);
-        });
+        if (ordenatedNodes.length > 1) {
+            Swal.fire({
+                title: "Comando enviado!",
+                width: 600,
+                padding: "2em",
+                color: "#716add",
+                background: "#FFF",
+                backdrop: `
+              rgba(181,208,232,0.5)
+              url("https://static.wixstatic.com/media/d19c2e_5bac4d5c4fb04108ad57513866da7498~mv2.gif")
+              left top
+              no-repeat
+            `,
+            });
+            api.post("/", {
+                commands: ordenatedNodes,
+            }).then((response) => {
+                console.log(response);
+            });
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Insira os comandos!",
+            });
+        }
     };
 
     return (
         <div>
             <Sidebar />
-            <div className='dndflow' style={{ height: 700, width: "100%" }}>
+            <div className='dndflow' style={{ height: 500, width: "100%" }}>
                 <ReactFlowProvider>
                     <div className='reactflow-wrapper' ref={reactFlowWrapper}>
                         <ReactFlow
@@ -161,7 +164,7 @@ const Flowchart = () => {
                     </div>
                 </ReactFlowProvider>
 
-                <button onClick={handlePrintNodes}>
+                <button onClick={handlePrintNodes} id='sendCommands'>
                     <RiRobot2Fill />
                 </button>
             </div>

@@ -7,9 +7,6 @@ const Navbar = () => {
                 <NavLink to='/' className={styles.brand}>
                     Johnny-<strong>Line</strong>
                 </NavLink>
-                <NavLink to='/johnny' className={styles.brand}>
-                    see 
-                </NavLink>
             </nav>
         </div>
     );
